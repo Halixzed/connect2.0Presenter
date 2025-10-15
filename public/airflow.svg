@@ -1,0 +1,15 @@
+<svg width="800" height="600" xmlns="http://www.w3.org/2000/svg">
+    <style>
+        .flow {
+            stroke-dasharray: 10;
+            animation: dash 1s linear infinite;
+        }
+        @keyframes dash {
+            to {
+                stroke-dashoffset: 20;
+            }
+        }
+    </style>
+  <path d="M 200 500 C 300 400, 500 400, 600 500" stroke="blue" stroke-width="4" fill="none" class="flow" />
+  <path d="M 200 450 C 300 350, 500 350, 600 450" stroke="lightblue" stroke-width="4" fill="none" class="flow" />
+</svg>

@@ -1,0 +1,9 @@
+<svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="grad2_v">
+      <stop offset="0%" stop-color="rgba(255, 165, 0, 0.8)"/>
+      <stop offset="100%" stop-color="rgba(255, 165, 0, 0)"/>
+    </radialGradient>
+  </defs>
+  <ellipse cx="400" cy="350" rx="150" ry="45" fill="url(#grad2_v)" />
+</svg>

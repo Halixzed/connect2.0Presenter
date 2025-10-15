@@ -1,0 +1,16 @@
+<svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+  <!-- Base -->
+  <path d="M 150 550 L 350 600 L 650 500 L 450 450 Z" fill="#4a4a4a" stroke="#333" stroke-width="2"/>
+  
+  <!-- Back Wall -->
+  <path d="M 150 550 L 150 150 L 450 100 L 450 450 Z" fill="#5a5a5a" stroke="#333" stroke-width="2"/>
+  
+  <!-- Side Wall -->
+  <path d="M 450 100 L 650 150 L 650 500 L 450 450 Z" fill="#6a6a6a" stroke="#333" stroke-width="2"/>
+
+  <!-- Zone Dividers -->
+  <line x1="150" y1="283" x2="450" y2="233" stroke="#333" stroke-width="1.5"/>
+  <line x1="150" y1="416" x2="450" y2="366" stroke="#333" stroke-width="1.5"/>
+  <line x1="450" y1="233" x2="650" y2="283" stroke="#333" stroke-width="1.5"/>
+  <line x1="450" y1="366" x2="650" y2="416" stroke="#333" stroke-width="1.5"/>
+</svg>
