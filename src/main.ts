@@ -104,6 +104,10 @@ class ThemeManager {
 
   private init(): void {
     // Toggle menu
+    this.button.setAttribute('aria-haspopup', 'true');
+    this.button.setAttribute('aria-expanded', 'false');
+    this.menu.setAttribute('role', 'menu');
+
     this.button.addEventListener('click', (e) => {
       e.stopPropagation();
       this.toggleMenu();
@@ -137,6 +141,8 @@ class ThemeManager {
       // Force reflow for animation
       void this.menu.offsetWidth;
       this.menu.classList.add('visible');
+      this.button.setAttribute('aria-expanded', 'true');
+      this.menu.setAttribute('aria-hidden', 'false');
     } else {
       this.closeMenu();
     }
@@ -145,6 +151,8 @@ class ThemeManager {
   private closeMenu(): void {
     this.isMenuOpen = false;
     this.menu.classList.remove('visible');
+    this.button.setAttribute('aria-expanded', 'false');
+    this.menu.setAttribute('aria-hidden', 'true');
     setTimeout(() => {
       this.menu.classList.add('hidden');
     }, 300);
@@ -174,7 +182,17 @@ class NavigationController {
   private init(): void {
     // Dot navigation
     this.dots.forEach((dot, index) => {
+      // make dots keyboard accessible
+      dot.setAttribute('role', 'button');
+      dot.setAttribute('tabindex', '0');
+      dot.setAttribute('aria-label', `Go to slide ${index + 1}`);
       dot.addEventListener('click', () => this.goToSlide(index));
+      dot.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          this.goToSlide(index);
+        }
+      });
     });
 
     // Scroll listener with debounce
@@ -220,7 +238,13 @@ class NavigationController {
     if (newSlide !== this.currentSlide) {
       this.currentSlide = newSlide;
       this.dots.forEach((dot, index) => {
-        dot.classList.toggle('active', index === this.currentSlide);
+        const isActive = index === this.currentSlide;
+        dot.classList.toggle('active', isActive);
+        if (isActive) {
+          dot.setAttribute('aria-current', 'true');
+        } else {
+          dot.removeAttribute('aria-current');
+        }
       });
     }
   }
@@ -301,6 +325,29 @@ function init(): void {
     setTimeout(() => {
       console.log('Connect-UI Presentation loaded successfully');
     }, 1);
+  }
+
+  // Reveal-on-scroll using IntersectionObserver
+  try {
+    const revealables = document.querySelectorAll<HTMLElement>('.reveal');
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!reduced && revealables.length > 0) {
+      const obs = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            obs.unobserve(entry.target);
+          }
+        });
+      }, { root: null, rootMargin: '0px 0px -10% 0px', threshold: 0.08 });
+
+      revealables.forEach(el => obs.observe(el));
+    } else {
+      // If reduced motion, reveal everything immediately
+      revealables.forEach(el => el.classList.add('visible'));
+    }
+  } catch (e) {
+    console.warn('Reveal observer failed', e);
   }
 }
 

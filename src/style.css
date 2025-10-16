@@ -43,6 +43,48 @@ body {
   --shadow-orange: 0 8px 32px rgba(255, 107, 53, 0.3);
 }
 
+/* Subtle page background gradient for depth */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle at 10% 10%, rgba(0,212,255,0.03), transparent 8%),
+              radial-gradient(circle at 90% 90%, rgba(255,107,53,0.03), transparent 8%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Glass overlay utility */
+.glass-card {
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  border: 1px solid rgba(255,255,255,0.04);
+  backdrop-filter: blur(8px) saturate(1.05);
+}
+
+/* Entrance utility */
+.reveal {
+  opacity: 0;
+  transform: translateY(18px) scale(0.995);
+  transition: opacity 0.6s cubic-bezier(0.2,0.9,0.2,1), transform 0.6s cubic-bezier(0.2,0.9,0.2,1);
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .reveal, .hero-product-name {
+    transition: none !important;
+    transform: none !important;
+  }
+  .clock:hover, .feature:hover { transform: none !important; }
+}
+
+/* Slightly scale nav-dots on large screens for polish */
+.nav-dots { transform-origin: center center; }
+.nav-dots:hover { transform: translateY(-2px) scale(1.02); }
+
 /* ===== THEME VARIATIONS ===== */
 body[data-theme="starbucks"] { 
   --accent-primary: #00704A;
@@ -917,34 +959,30 @@ input:focus + .slider {
 /* ===== PROFILE SELECTOR ===== */
 #profile-selector { 
   position: fixed; 
-  top: 30px; 
-  right: 30px; 
+  top: 18px; 
+  right: 18px; 
   z-index: 1000; 
 }
 
 #profile-button { 
-  background: rgba(26, 26, 26, 0.8);
-  backdrop-filter: blur(10px);
-  border: 2px solid rgba(255, 255, 255, 0.1);
+  background: transparent;
+  border: 2px solid rgba(255,255,255,0.06);
   color: var(--text-secondary);
-  padding: 14px; 
-  border-radius: 50%; 
+  padding: 10px; 
+  border-radius: 10px; 
   cursor: pointer; 
   display: flex; 
   align-items: center;
   justify-content: center;
-  transition: all 0.3s ease;
-  box-shadow: var(--shadow-sm);
-  width: 52px;
-  height: 52px;
+  transition: all 0.18s ease;
+  width: 46px;
+  height: 46px;
   touch-action: manipulation;
 }
 
-#profile-button:hover { 
-  background: rgba(36, 36, 36, 0.9);
+#profile-button:hover, #profile-button:focus {
   border-color: var(--accent-primary);
-  transform: rotate(90deg);
-  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
 }
 
 #profile-button svg { 
@@ -954,22 +992,20 @@ input:focus + .slider {
 
 #profile-menu { 
   position: absolute; 
-  top: 60px; 
+  top: 56px; 
   right: 0; 
-  background: rgba(26, 26, 26, 0.95);
-  backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 12px; 
-  padding: 8px; 
+  background: rgba(18,18,18,0.96);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: 8px; 
+  padding: 6px; 
   display: flex; 
   flex-direction: column; 
-  gap: 4px;
-  min-width: 180px;
-  box-shadow: var(--shadow-lg);
+  gap: 6px;
+  min-width: 160px;
   opacity: 0;
-  transform: translateY(-10px);
+  transform: translateY(-6px);
   pointer-events: none;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: opacity 0.18s ease, transform 0.18s ease;
 }
 
 #profile-menu.visible {
@@ -1004,44 +1040,47 @@ input:focus + .slider {
 /* ===== NAVIGATION DOTS ===== */
 .nav-dots {
   position: fixed;
-  bottom: 40px;
+  bottom: 32px;
   left: 50%;
   transform: translateX(-50%);
   z-index: 100;
   display: flex;
   flex-direction: row;
-  gap: 16px;
-  padding: 16px 24px;
-  background: rgba(26, 26, 26, 0.8);
-  backdrop-filter: blur(10px);
-  border-radius: 50px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: var(--shadow-lg);
+  gap: 12px;
+  padding: 8px;
+  background: transparent; /* minimal */
+  border-radius: 999px;
 }
 
 .nav-dot {
-  width: 14px;
-  height: 14px;
+  width: 12px;
+  height: 12px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.18);
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: transform 0.18s ease, background 0.18s ease;
   border: 2px solid transparent;
   touch-action: manipulation;
-  padding: 4px;
+  display: inline-block;
 }
 
-.nav-dot:hover {
-  background: rgba(255, 255, 255, 0.5);
-  transform: scale(1.25);
+.nav-dot:hover,
+.nav-dot:focus {
+  transform: scale(1.18);
+  background: rgba(255, 255, 255, 0.28);
+}
+
+.nav-dot:focus-visible {
+  outline: 3px solid rgba(217,77,20,0.18);
+  outline-offset: 4px;
 }
 
 .nav-dot.active {
   background: var(--accent-primary);
-  border-color: var(--accent-secondary);
-  box-shadow: 0 0 12px var(--accent-primary);
-  width: 36px;
-  border-radius: 7px;
+  border-color: transparent;
+  width: 28px;
+  height: 12px;
+  border-radius: 10px;
 }
 
 /* ===== RESPONSIVE DESIGN (modernized) ===== */
