@@ -4,716 +4,11 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>FlexeServe Connect | Intelligent Food Holding Technology</title>
+    <title>flexeserve connect | Intelligent Food Holding Technology</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <style>
-      :root {
-        --bg-dark: #0a0a0a;
-        --bg-card: #1a1a1a;
-        --text-primary: #ffffff;
-        --text-secondary: #a0a0a0;
-        --accent-primary: #FF6B35;
-        --accent-secondary: #FF8C42;
-        --accent-light: #FFA466;
-        --gradient-primary: linear-gradient(135deg, #FF6B35 0%, #FF8C42 100%);
-        --gradient-accent: linear-gradient(135deg, #FF8C42 0%, #FFA466 100%);
-        --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
-        --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.4);
-        --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.5);
-        --shadow-orange: 0 8px 32px rgba(255, 107, 53, 0.3);
-      }
-
-      /* Theme Definitions */
-      body[data-theme="starbucks"] { 
-        --accent-primary: #00704A;
-        --accent-secondary: #1e3932;
-        --gradient-primary: linear-gradient(135deg, #00704A 0%, #1e3932 100%);
-      }
-      body[data-theme="greggs"] { 
-        --accent-primary: #0055A4;
-        --accent-secondary: #FFC72C;
-        --gradient-primary: linear-gradient(135deg, #0055A4 0%, #FFC72C 100%);
-      }
-
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
-
-      html {
-        scroll-behavior: smooth;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-      }
-
-      body { 
-        margin: 0; 
-        background: var(--bg-dark);
-        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-        color: var(--text-primary);
-        overflow: hidden;
-        line-height: 1.6;
-      }
-
-      #presentation-scroller {
-        display: flex;
-        width: 100vw;
-        height: 100vh;
-        overflow-x: auto;
-        overflow-y: hidden;
-        scroll-snap-type: x mandatory;
-        scroll-behavior: smooth;
-        scrollbar-width: none;
-      }
-
-      #presentation-scroller::-webkit-scrollbar {
-        display: none;
-      }
-
-      .slide {
-        flex: 0 0 100vw;
-        height: 100vh;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        scroll-snap-align: start;
-        padding: 40px 60px;
-        box-sizing: border-box;
-        position: relative;
-        opacity: 0;
-        animation: fadeIn 0.6s ease-out forwards;
-      }
-
-      @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(20px); }
-        to { opacity: 1; transform: translateY(0); }
-      }
-
-      @keyframes slideInUp {
-        from { opacity: 0; transform: translateY(30px); }
-        to { opacity: 1; transform: translateY(0); }
-      }
-
-      @keyframes glow {
-        0%, 100% { box-shadow: 0 0 20px rgba(0, 102, 255, 0.3); }
-        50% { box-shadow: 0 0 40px rgba(0, 212, 255, 0.5); }
-      }
-
-      .slide-bg {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: radial-gradient(circle at 30% 50%, rgba(255, 107, 53, 0.1) 0%, transparent 50%);
-        pointer-events: none;
-        z-index: 0;
-      }
-
-      .slide-content {
-        position: relative;
-        z-index: 1;
-        max-width: 1400px;
-        width: 100%;
-      }
-
-      .slide h1 { 
-        font-size: clamp(3rem, 8vw, 6rem);
-        font-weight: 900;
-        margin-bottom: 20px;
-        background: var(--gradient-primary);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-        letter-spacing: -0.02em;
-        animation: slideInUp 0.8s ease-out 0.2s backwards;
-      }
-
-      .slide h2 { 
-        font-size: clamp(2rem, 5vw, 3.5rem);
-        font-weight: 800;
-        margin-bottom: 30px;
-        color: var(--text-primary);
-        letter-spacing: -0.01em;
-        animation: slideInUp 0.8s ease-out 0.3s backwards;
-      }
-
-      .slide h3 {
-        font-size: 1.5rem;
-        font-weight: 700;
-        margin-bottom: 15px;
-        color: var(--text-primary);
-      }
-
-      .slide p { 
-        font-size: clamp(1.1rem, 2vw, 1.4rem);
-        max-width: 900px;
-        line-height: 1.8;
-        color: var(--text-secondary);
-        margin: 0 auto 20px;
-        animation: slideInUp 0.8s ease-out 0.4s backwards;
-      }
-
-      .subtitle {
-        font-size: clamp(1.2rem, 3vw, 2rem);
-        color: var(--accent-secondary);
-        font-weight: 500;
-        margin-top: 10px;
-        animation: slideInUp 0.8s ease-out 0.5s backwards;
-      }
-
-      /* Interactive Demo Slide */
-      .slide.interactive-slide { 
-        flex-direction: row; 
-        gap: 40px; 
-        padding: 60px;
-      }
-
-      #interactive-unit { 
-        flex-basis: 100%; 
-        display: flex; 
-        align-items: center; 
-        justify-content: center; 
-        gap: 50px; 
-        height: 100%; 
-      }
-
-      #presentation-container { 
-        position: relative; 
-        width: 65%; 
-        height: 85%; 
-        filter: drop-shadow(0 20px 60px rgba(255, 107, 53, 0.3));
-        transition: transform 0.3s ease;
-      }
-
-      #presentation-container:hover {
-        transform: scale(1.02);
-      }
-
-      .layer { 
-        position: absolute; 
-        top: 0; 
-        left: 0; 
-        width: 100%; 
-        height: 100%; 
-        background-size: contain; 
-        background-repeat: no-repeat; 
-        background-position: center; 
-        transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        will-change: opacity;
-      }
-
-      #controls { 
-        width: 35%; 
-        height: 100%; 
-        display: flex; 
-        flex-direction: column; 
-        justify-content: center; 
-        gap: 20px; 
-        padding: 30px;
-      }
-
-      .zone-controls { 
-        background: var(--bg-card);
-        padding: 24px; 
-        border-radius: 16px; 
-        border-left: 4px solid var(--accent-primary);
-        box-shadow: var(--shadow-md);
-        backdrop-filter: blur(10px);
-        transition: all 0.3s ease;
-      }
-
-      .zone-controls:hover {
-        transform: translateX(5px);
-        box-shadow: var(--shadow-orange);
-        border-left-color: var(--accent-secondary);
-      }
-
-      .zone-controls h4 { 
-        margin: 0 0 20px 0; 
-        font-size: 1.4rem; 
-        font-weight: 700;
-        color: var(--text-primary);
-        letter-spacing: 0.02em;
-      }
-
-      .control { 
-        display: flex; 
-        align-items: center; 
-        justify-content: space-between; 
-        margin-bottom: 18px;
-        transition: opacity 0.2s ease;
-        min-height: 44px;
-      }
-
-      .control:hover {
-        opacity: 0.9;
-      }
-
-      .control:last-child { margin-bottom: 0; }
-
-      .control label { 
-        font-size: 1.1rem; 
-        font-weight: 500;
-        color: var(--text-secondary);
-        cursor: pointer;
-        transition: color 0.2s ease;
-        user-select: none;
-      }
-
-      .control:hover label {
-        color: var(--text-primary);
-      }
-
-      /* Custom Toggle Switch - Tablet-Optimized Touch Targets */
-      .toggle-switch { 
-        position: relative; 
-        display: inline-block; 
-        width: 64px; 
-        height: 36px; 
-      }
-
-      .toggle-switch input { 
-        opacity: 0; 
-        width: 0; 
-        height: 0; 
-      }
-
-      .slider { 
-        position: absolute; 
-        cursor: pointer; 
-        top: 0; 
-        left: 0; 
-        right: 0; 
-        bottom: 0; 
-        background: #2a2a2a;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        border-radius: 30px;
-        border: 2px solid #3a3a3a;
-      }
-
-      .slider:before { 
-        position: absolute; 
-        content: ""; 
-        height: 28px; 
-        width: 28px; 
-        left: 3px; 
-        bottom: 2px; 
-        background: linear-gradient(135deg, #ffffff 0%, #e0e0e0 100%);
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        border-radius: 50%;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-      }
-
-      input:checked + .slider { 
-        background: var(--gradient-primary);
-        border-color: var(--accent-secondary);
-        box-shadow: 0 0 15px rgba(255, 107, 53, 0.4);
-      }
-
-      input:checked + .slider:before { 
-        transform: translateX(28px);
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
-      }
-
-      input:focus + .slider {
-        box-shadow: 0 0 20px rgba(255, 107, 53, 0.6);
-      }
-
-      /* Content Slides - Enhanced Design */
-      .feature-grid { 
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 40px; 
-        margin-top: 50px;
-        width: 100%;
-        animation: slideInUp 0.8s ease-out 0.5s backwards;
-      }
-
-      .feature { 
-        background: var(--bg-card);
-        padding: 40px;
-        border-radius: 20px;
-        border: 1px solid rgba(255, 255, 255, 0.05);
-        box-shadow: var(--shadow-md);
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        position: relative;
-        overflow: hidden;
-      }
-
-      .feature::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 4px;
-        background: var(--gradient-primary);
-        transform: scaleX(0);
-        transition: transform 0.3s ease;
-      }
-
-      .feature:hover::before {
-        transform: scaleX(1);
-      }
-
-      .feature:hover {
-        transform: translateY(-10px);
-        box-shadow: var(--shadow-lg);
-        border-color: rgba(0, 212, 255, 0.3);
-      }
-
-      .feature .icon { 
-        font-size: 4rem;
-        margin-bottom: 20px;
-        filter: drop-shadow(0 4px 8px rgba(255, 107, 53, 0.3));
-        display: inline-block;
-        transition: transform 0.3s ease;
-      }
-
-      .feature:hover .icon {
-        transform: scale(1.1) rotate(5deg);
-      }
-
-      .feature h3 {
-        color: var(--text-primary);
-        margin-bottom: 15px;
-      }
-
-      .feature p {
-        color: var(--text-secondary);
-        font-size: 1.1rem;
-        line-height: 1.7;
-        margin: 0;
-      }
-
-      .testimonial-box { 
-        background: var(--bg-card);
-        border-left: 6px solid var(--accent-primary);
-        padding: 40px 50px;
-        margin-top: 40px;
-        border-radius: 16px;
-        box-shadow: var(--shadow-md);
-        max-width: 900px;
-        position: relative;
-        animation: slideInUp 0.8s ease-out 0.5s backwards;
-      }
-
-      .testimonial-box::before {
-        content: '"';
-        position: absolute;
-        top: 20px;
-        left: 20px;
-        font-size: 6rem;
-        color: var(--accent-primary);
-        opacity: 0.2;
-        font-family: Georgia, serif;
-      }
-
-      .testimonial-box p { 
-        font-style: italic; 
-        font-size: 1.5rem;
-        margin: 0;
-        color: var(--text-primary);
-        position: relative;
-        z-index: 1;
-      }
-
-      .testimonial-box footer { 
-        margin-top: 20px; 
-        font-weight: 600;
-        color: var(--accent-secondary);
-        font-size: 1.1rem;
-      }
-
-      .cta-button {
-        display: inline-block;
-        padding: 20px 50px;
-        background: var(--gradient-primary);
-        color: var(--text-primary);
-        text-decoration: none;
-        border-radius: 50px;
-        font-weight: 700;
-        font-size: 1.3rem;
-        margin-top: 30px;
-        min-height: 60px;
-        box-shadow: var(--shadow-orange);
-        transition: all 0.3s ease;
-        animation: slideInUp 0.8s ease-out 0.6s backwards;
-        cursor: pointer;
-        touch-action: manipulation;
-      }
-
-      .cta-button:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 12px 36px rgba(255, 107, 53, 0.6);
-      }
-
-      .stats-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 30px;
-        margin-top: 50px;
-        width: 100%;
-        animation: slideInUp 0.8s ease-out 0.6s backwards;
-      }
-
-      .stat-card {
-        text-align: center;
-        padding: 30px;
-        background: var(--bg-card);
-        border-radius: 16px;
-        border: 1px solid rgba(255, 255, 255, 0.05);
-        transition: all 0.3s ease;
-      }
-
-      .stat-card:hover {
-        transform: translateY(-5px);
-        border-color: rgba(0, 212, 255, 0.3);
-      }
-
-      .stat-number {
-        font-size: 3.5rem;
-        font-weight: 900;
-        background: var(--gradient-accent);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-        margin-bottom: 10px;
-      }
-
-      .stat-label {
-        font-size: 1.1rem;
-        color: var(--text-secondary);
-        font-weight: 500;
-      }
-
-      /* Profile Selector - Enhanced */
-      #profile-selector { 
-        position: fixed; 
-        top: 30px; 
-        right: 30px; 
-        z-index: 1000; 
-      }
-
-      #profile-button { 
-        background: rgba(26, 26, 26, 0.8);
-        backdrop-filter: blur(10px);
-        border: 2px solid rgba(255, 255, 255, 0.1);
-        color: var(--text-secondary);
-        padding: 14px; 
-        border-radius: 50%; 
-        cursor: pointer; 
-        display: flex; 
-        align-items: center;
-        justify-content: center;
-        transition: all 0.3s ease;
-        box-shadow: var(--shadow-sm);
-        width: 52px;
-        height: 52px;
-        touch-action: manipulation;
-      }
-
-      #profile-button:hover { 
-        background: rgba(36, 36, 36, 0.9);
-        border-color: var(--accent-primary);
-        transform: rotate(90deg);
-        box-shadow: var(--shadow-md);
-      }
-
-      #profile-button svg { 
-        width: 26px; 
-        height: 26px; 
-      }
-
-      #profile-menu { 
-        position: absolute; 
-        top: 60px; 
-        right: 0; 
-        background: rgba(26, 26, 26, 0.95);
-        backdrop-filter: blur(20px);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 12px; 
-        padding: 8px; 
-        display: flex; 
-        flex-direction: column; 
-        gap: 4px;
-        min-width: 180px;
-        box-shadow: var(--shadow-lg);
-        opacity: 0;
-        transform: translateY(-10px);
-        pointer-events: none;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      }
-
-      #profile-menu.visible {
-        opacity: 1;
-        transform: translateY(0);
-        pointer-events: all;
-      }
-
-      #profile-menu a { 
-        color: var(--text-primary);
-        text-decoration: none; 
-        padding: 14px 18px; 
-        border-radius: 8px; 
-        transition: all 0.2s ease;
-        font-weight: 500;
-        font-size: 1.05rem;
-        min-height: 48px;
-        display: flex;
-        align-items: center;
-        touch-action: manipulation;
-      }
-
-      #profile-menu a:hover { 
-        background: var(--gradient-primary);
-        transform: translateX(4px);
-      }
-
-      .hidden { 
-        display: none; 
-      }
-
-      /* Navigation Dots - Bottom Center for Horizontal Scrolling */
-      .nav-dots {
-        position: fixed;
-        bottom: 40px;
-        left: 50%;
-        transform: translateX(-50%);
-        z-index: 100;
-        display: flex;
-        flex-direction: row;
-        gap: 16px;
-        padding: 16px 24px;
-        background: rgba(26, 26, 26, 0.8);
-        backdrop-filter: blur(10px);
-        border-radius: 50px;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        box-shadow: var(--shadow-lg);
-      }
-
-      .nav-dot {
-        width: 14px;
-        height: 14px;
-        border-radius: 50%;
-        background: rgba(255, 255, 255, 0.3);
-        cursor: pointer;
-        transition: all 0.3s ease;
-        border: 2px solid transparent;
-        touch-action: manipulation;
-        padding: 4px;
-      }
-
-      .nav-dot:hover {
-        background: rgba(255, 255, 255, 0.5);
-        transform: scale(1.25);
-      }
-
-      .nav-dot.active {
-        background: var(--accent-primary);
-        border-color: var(--accent-secondary);
-        box-shadow: 0 0 12px var(--accent-primary);
-        width: 36px;
-        border-radius: 7px;
-      }
-
-      /* Responsive Design */
-      /* Tablet-Optimized Design (Primary Target: 768px - 1366px) */
-      @media (max-width: 1366px) {
-        .slide { padding: 50px 60px; }
-        .slide h1 { font-size: clamp(3rem, 7vw, 5rem); }
-        .slide h2 { font-size: clamp(2rem, 5vw, 3.2rem); }
-        .slide h3 { font-size: 1.8rem; }
-        .slide p { font-size: clamp(1.15rem, 2.2vw, 1.5rem); }
-        
-        .feature-grid { 
-          gap: 35px;
-          grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        }
-        
-        .feature-card, .stat-card, .step-card {
-          padding: 30px;
-        }
-        
-        .stat-number { font-size: 3.5rem; }
-        .cta-button { 
-          padding: 18px 40px; 
-          font-size: 1.25rem;
-          min-height: 56px;
-        }
-        
-        .nav-dots { 
-          bottom: 30px; 
-          gap: 16px; 
-          padding: 16px 28px;
-        }
-        .nav-dot { 
-          width: 14px; 
-          height: 14px;
-          cursor: pointer;
-        }
-        .nav-dot.active { width: 36px; }
-        
-        #profile-button { 
-          width: 50px; 
-          height: 50px;
-        }
-      }
-
-      @media (max-width: 1024px) {
-        .slide { padding: 40px 50px; }
-        .slide h1 { font-size: clamp(2.5rem, 6.5vw, 4.5rem); }
-        .slide h2 { font-size: clamp(1.8rem, 4.5vw, 3rem); }
-        
-        .feature-grid { 
-          gap: 30px;
-          grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        }
-        
-        .slide.interactive-slide { 
-          flex-direction: column;
-          gap: 30px;
-        }
-        #presentation-container { 
-          width: 100%; 
-          height: 55vh;
-          max-height: 450px;
-        }
-        #controls { 
-          width: 100%; 
-          padding: 25px;
-        }
-      }
-
-      @media (max-width: 768px) {
-        .slide { padding: 30px 40px; }
-        .slide h1 { font-size: clamp(2rem, 6vw, 3.5rem); }
-        .slide h2 { font-size: clamp(1.5rem, 4vw, 2.5rem); }
-        
-        .feature-grid { 
-          grid-template-columns: 1fr;
-          gap: 25px;
-        }
-        
-        .nav-dots { 
-          bottom: 20px; 
-          gap: 12px; 
-          padding: 12px 20px; 
-        }
-        .nav-dot { width: 12px; height: 12px; }
-        .nav-dot.active { width: 28px; }
-        
-        #presentation-container { 
-          height: 50vh;
-          max-height: 350px;
-        }
-      }
-    </style>
+    <link rel="stylesheet" href="/src/style.css">
   </head>
   <body data-theme="default">
 
@@ -748,32 +43,46 @@
     <main id="presentation-scroller">
       <!-- Slide 1: Hero / Title -->
       <section class="slide">
+        <div class="hero-backdrop"></div>
         <div class="slide-bg"></div>
         <div class="slide-content">
-          <h1>FlexeServe Connect</h1>
+          <div class="hero-title-container">
+            <div class="hero-brand-name">
+              <span class="brand-text">flex</span><span class="brand-highlight">e</span><span class="brand-text">serve</span><sup class="brand-trademark">®</sup>
+            </div>
+            <h1 class="hero-product-name">
+              <span class="product-text">conn</span><span class="product-highlight">e</span><span class="product-text">ct</span>
+            </h1>
+          </div>
           <p class="subtitle">The Future of Intelligent Food Holding</p>
-          <p style="margin-top: 40px; max-width: 700px;">Revolutionary multi-zone food holding technology. Engineered for precision, built for performance, designed for excellence.</p>
+          <p class="hero-description">Revolutionary multi-zone food holding technology. Engineered for precision, built for performance, designed for excellence.</p>
         </div>
       </section>
 
-      <!-- Slide 2: The Problem -->
+      <!-- Slide 2: Why Connect Features -->
       <section class="slide">
         <div class="slide-bg"></div>
         <div class="slide-content">
-          <h2>The Challenge in Food Service</h2>
-          <p style="max-width: 800px; margin: 30px auto;">Traditional holding equipment wastes energy, compromises food quality, and lacks intelligent control. The result? Higher costs, dissatisfied customers, and compromised food safety standards.</p>
-          <div class="stats-grid">
-            <div class="stat-card">
-              <div class="stat-number">40%</div>
-              <div class="stat-label">Food Waste in QSR</div>
+          <h2>Why conn<span style="color: rgb(217, 77, 20);">e</span>ct?</h2>
+          <p class="problem-description">Intelligent technology designed to revolutionize your food service operations</p>
+          <div class="connect-features-list">
+            <div class="feature-bullet-item">
+              <p>Scheduling feature to automate processes and control energy consumption.</p>
             </div>
-            <div class="stat-card">
-              <div class="stat-number">35%</div>
-              <div class="stat-label">Energy Inefficiency</div>
+            <div class="feature-bullet-item">
+              <p>Master the day parts and optimise your range, fully utilising Flexeserve technology – automatically.</p>
             </div>
-            <div class="stat-card">
-              <div class="stat-number">25%</div>
-              <div class="stat-label">Quality Complaints</div>
+            <div class="feature-bullet-item">
+              <p>Temperature monitoring to enhance confidence in your food safety procedures and provide performance data.</p>
+            </div>
+            <div class="feature-bullet-item">
+              <p><strong>NEW</strong> Flexeserve Smart Switches add scheduling to 3<sup>rd</sup> party devices in every location.</p>
+            </div>
+            <div class="feature-bullet-item">
+              <p>The temperature of each shelf of Flexeserve Zone can be adjusted independently to enable a wider range of food to be served.</p>
+            </div>
+            <div class="feature-bullet-item">
+              <p>Unused shelves can be turned off, saving a significant amount of energy.</p>
             </div>
           </div>
         </div>
@@ -849,41 +158,61 @@
         </div>
       </section>
 
-      <!-- Slide 4: Key Features -->
-      <section class="slide">
+      <!-- Slide 4: Scheduling with Connect -->
+      <section class="slide scheduling-slide">
         <div class="slide-bg"></div>
         <div class="slide-content">
-          <h2>Intelligent Features</h2>
-          <div class="feature-grid">
-            <div class="feature">
-              <div class="icon">🌡️</div>
-              <h3>Precision Temperature</h3>
-              <p>Independent zone control maintains exact temperatures across three zones. Keep hot foods hot and ready foods at their perfect serving temperature.</p>
+          <div class="scheduling-layout">
+            <div class="scheduling-left">
+              <h2>Scheduling with Conn<span style="color: rgb(217, 77, 20);">e</span>ct</h2>
+              <div class="scheduling-benefits-list">
+                <div class="scheduling-bullet-item">
+                  <p>Scheduling reduces the manual steps for the store staff and introduces consistency throughout all stores.</p>
+                </div>
+                <div class="scheduling-bullet-item">
+                  <p>Implementing schedules eliminates energy wastage when units are left on unnecessarily.</p>
+                </div>
+                <div class="scheduling-bullet-item">
+                  <p>Schedules enable the safe and seamless implementation of multiple temperature settings for specific day parts without operator errors.</p>
+                </div>
+                <div class="scheduling-bullet-item">
+                  <p>Schedules help to significantly save energy.</p>
+                </div>
+              </div>
             </div>
-            <div class="feature">
-              <div class="icon">💨</div>
-              <h3>Smart Airflow System</h3>
-              <p>Patented airflow technology ensures even heat distribution. No hot spots, no cold corners – just perfectly held food.</p>
-            </div>
-            <div class="feature">
-              <div class="icon">💡</div>
-              <h3>LED Lighting</h3>
-              <p>Energy-efficient LED lighting in each zone enhances food presentation while reducing power consumption by up to 70%.</p>
-            </div>
-            <div class="feature">
-              <div class="icon">📱</div>
-              <h3>Smart Controls</h3>
-              <p>Intuitive touch controls with real-time monitoring. Adjust settings instantly, track performance, and optimize operations.</p>
-            </div>
-            <div class="feature">
-              <div class="icon">🔋</div>
-              <h3>Energy Efficient</h3>
-              <p>Advanced insulation and smart power management reduce energy costs by up to 40% compared to traditional units.</p>
-            </div>
-            <div class="feature">
-              <div class="icon">�️</div>
-              <h3>Food Safety</h3>
-              <p>Continuous temperature monitoring and alerts ensure compliance with food safety regulations at all times.</p>
+            <div class="scheduling-right">
+              <div class="clocks-container">
+                <div class="clock-item">
+                  <div class="clock">
+                    <div class="clock-face">
+                      <div class="clock-number">7:00</div>
+                      <div class="clock-period">AM</div>
+                    </div>
+                  </div>
+                  <div class="image-placeholder"></div>
+                  <p class="clock-description">Automatically turn on the shelves you require for your breakfast program, set to the correct set point.</p>
+                </div>
+                <div class="clock-item">
+                  <div class="clock">
+                    <div class="clock-face">
+                      <div class="clock-number">10:30</div>
+                      <div class="clock-period">AM</div>
+                    </div>
+                  </div>
+                  <div class="image-placeholder"></div>
+                  <p class="clock-description">Seamlessly switch to all zones for peak trading, set to the temperature best suited to the products on display.</p>
+                </div>
+                <div class="clock-item">
+                  <div class="clock">
+                    <div class="clock-face">
+                      <div class="clock-number">8:00</div>
+                      <div class="clock-period">PM</div>
+                    </div>
+                  </div>
+                  <div class="image-placeholder"></div>
+                  <p class="clock-description">Turn Flexeserve Zone off at a set time to eliminate energy wastage when food is not served.</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -923,7 +252,7 @@
             <p>The FlexeServe Connect system has completely transformed our kitchen operations. Food quality is consistently excellent, waste is down 40%, and our customers have never been happier. The energy savings alone paid for the unit in less than a year.</p>
             <footer>— John Smith, Operations Manager, The Gourmet Kitchen</footer>
           </div>
-          <div class="stats-grid" style="margin-top: 60px;">
+          <div class="stats-grid testimonial-stats">
             <div class="stat-card">
               <div class="stat-number">500+</div>
               <div class="stat-label">Active Installations</div>
@@ -946,27 +275,27 @@
         <div class="slide-content">
           <h2>Technical Specifications</h2>
           <div class="feature-grid">
-            <div class="feature">
+            <div class="feature tech-spec-dimensions">
               <h3>Dimensions</h3>
               <p>Height: 1850mm<br>Width: 900mm<br>Depth: 700mm</p>
             </div>
-            <div class="feature">
+            <div class="feature tech-spec-power">
               <h3>Power</h3>
               <p>230V AC<br>Max Power: 3.2kW<br>Energy Rating: A++</p>
             </div>
-            <div class="feature">
+            <div class="feature tech-spec-temperature">
               <h3>Temperature Range</h3>
               <p>30°C - 90°C<br>±1°C accuracy<br>Individual zone control</p>
             </div>
-            <div class="feature">
+            <div class="feature tech-spec-capacity">
               <h3>Capacity</h3>
               <p>3 independent zones<br>15 GN 1/1 capacity<br>Adjustable shelving</p>
             </div>
-            <div class="feature">
+            <div class="feature tech-spec-construction">
               <h3>Construction</h3>
               <p>Stainless steel 304<br>Tempered glass doors<br>High-grade insulation</p>
             </div>
-            <div class="feature">
+            <div class="feature tech-spec-warranty">
               <h3>Warranty</h3>
               <p>3-year parts & labor<br>24/7 support<br>On-site maintenance</p>
             </div>
@@ -979,10 +308,10 @@
         <div class="slide-bg"></div>
         <div class="slide-content">
           <h2>Ready to Transform Your Kitchen?</h2>
-          <p style="margin-top: 30px; max-width: 700px;">Join hundreds of satisfied customers who have revolutionized their food service operations with FlexeServe Connect.</p>
-          <a href="mailto:sales@FlexeServe Connect.com" class="cta-button">Request a Demo</a>
-          <p style="font-size: 1.5rem; color: var(--accent-cyan); margin-top: 50px; font-weight: 600;">sales@FlexeServe Connect.com</p>
-          <p style="margin-top: 20px; color: var(--text-secondary);">+44 (0) 20 1234 5678</p>
+          <p class="cta-description">Join hundreds of satisfied customers who have revolutionized their food service operations with FlexeServe Connect.</p>
+          <a href="mailto:sales@flexeserve.com" class="cta-button">Request a Demo</a>
+          <p class="contact-email">sales@flexeserve.com</p>
+          <p class="contact-phone">+44 (0) 1709 829 609 | +1 877 704 3539</p>
         </div>
       </section>
 

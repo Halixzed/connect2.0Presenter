@@ -231,6 +231,47 @@ function init(): void {
   // Setup static layers
   setupStaticLayers();
 
+  // Initialize parallax controller (subtle 3D heading effect)
+  try {
+    const hero = document.querySelector('.hero-product-name') as HTMLElement | null;
+    if (hero) {
+      new (class ParallaxController {
+        private target: HTMLElement;
+        private scroller: HTMLElement | null;
+        private rafId = 0;
+
+        constructor(target: HTMLElement) {
+          this.target = target;
+          this.scroller = document.getElementById('presentation-scroller');
+          this.bind();
+        }
+
+        private bind() {
+          if (!this.scroller) return;
+          this.scroller.addEventListener('scroll', this.onScroll, { passive: true });
+          window.addEventListener('resize', this.onScroll, { passive: true });
+          this.onScroll();
+        }
+
+        private onScroll = () => {
+          cancelAnimationFrame(this.rafId);
+          this.rafId = requestAnimationFrame(() => {
+            const scroller = this.scroller as HTMLElement;
+            const x = scroller ? scroller.scrollLeft : 0;
+            // subtle parallax: move heading a fraction of the scroll and rotate slightly
+            const translateX = Math.max(-40, Math.min(40, (x / 30)));
+            const rotateY = Math.max(-6, Math.min(6, (x / 200)));
+            const scale = 1 + Math.min(0.06, Math.abs(x) / 2000);
+            this.target.style.transform = `translate3d(${translateX}px, 0, 0) rotateY(${rotateY}deg) scale(${scale})`;
+            this.target.style.textShadow = `${-rotateY}px ${Math.abs(rotateY)}px 18px rgba(0,0,0,0.25)`;
+          });
+        }
+      })(hero);
+    }
+  } catch (e) {
+    console.warn('ParallaxController init failed', e);
+  }
+
   // Initialize zones
   [1, 2, 3].forEach(zoneNum => new ZoneController(zoneNum));
 
